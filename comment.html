@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Ticket Helper</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	
+		<script>
+		function copyToClipboard() {
+			var copyText = document.getElementById("copyText");
+			copyText.select();
+			copyText.setSelectionRange(0, 99999);
+			document.execCommand("copy");
+
+		}
+		function copyToClipboard2() {
+			var copyText = document.getElementById("copyText2");
+			copyText.select();
+			copyText.setSelectionRange(0, 99999);
+			document.execCommand("copy");
+
+		}
+		
+		
+	</script>
+</head>
+<body>
+
+<textarea id="copyText" style="position: absolute; left: -9999px;">Speed Test (/)
+DS: US:
+DS: US:
+DS: US:</textarea>
+<button id="fancyButton" onclick="copyToClipboard()">SPEED RESULTS</button>
+<textarea id="copyText2" style="position: absolute; left: -9999px;">Name:
+Phone Number:
+Callback Time:
+Address:
+All Services Out?:
+Account Number:
+Work Order Number: 
+</textarea>
+<button id="fancyButton" onclick="copyToClipboard2()">CONTACT INFO</button>
+
+<form>
+  <div class="form-group">
+    <label for="caller">Caller:</label>
+    <textarea id="caller" class="form-control" placeholder="Enter caller name" rows="1"></textarea>
+  </div>
+  <div class="form-group">
+    <label for="ticketBody">Ticket Body:</label>
+    <textarea id="ticketBody" class="form-control" placeholder="Enter ticket body" rows="10"></textarea>
+  </div>
+  <div class="form-group">
+    <label for="modemStats">Modem Stats:</label>
+    <textarea id="modemStats" class="form-control" placeholder="Enter modem stats" rows="1"></textarea>
+  </div>
+  <button id="fancyButton" type="submit" class="btn btn-primary">Submit</button>
+   <button id="clearBtn" type="button">Clear</button>
+
+</form>
+
+	<div id="results">
+		<c><button id="copyBtn"><c>Copy Results</c></button> </c>
+		<p><span id="callerResult"></span> calling in</p> 
+		<p><span id="ticketBodyResult"></span></p>
+		<p><span id="modemStatsResult"></span></p>
+	</div>
+
+	
+
+	<script>
+const form = document.querySelector('form');
+const callerResult = document.querySelector('#callerResult');
+const ticketBodyResult = document.querySelector('#ticketBodyResult');
+const modemStatsResult = document.querySelector('#modemStatsResult');
+const results = document.querySelector('#results');
+
+const copyBtn = document.querySelector('#copyBtn');
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  const callerValue = document.querySelector('#caller').value;
+  const ticketBodyValue = document.querySelector('#ticketBody').value;
+  const modemStatsValue = document.querySelector('#modemStats').value;
+
+  callerResult.textContent = callerValue;
+  ticketBodyResult.textContent = ticketBodyValue;
+  modemStatsResult.textContent = modemStatsValue;
+
+  results.classList.add('show');
+});
+
+copyBtn.addEventListener('click', () => {
+  const callerValue = document.querySelector('#callerResult').textContent;
+  const ticketBodyValue = document.querySelector('#ticketBodyResult').textContent.replace(/(\r?\n){2,}/g, "\n");
+  const modemStatsValue = document.querySelector('#modemStatsResult').textContent;
+  const resultsValue = `${callerValue} calling in\n${ticketBodyValue}\nxxx MODEM STATS xxx\n${modemStatsValue}`;
+
+  navigator.clipboard.writeText(resultsValue)
+    .then(() => {
+
+    })
+    .catch(err => {
+      console.error('Failed to copy: ', err);
+    });
+});
+
+clearBtn.addEventListener('click', () => {
+  document.querySelector('#caller').value = '';
+  document.querySelector('#ticketBody').value = '';
+  document.querySelector('#modemStats').value = '';
+  callerResult.textContent = '';
+  ticketBodyResult.textContent = '';
+  modemStatsResult.textContent = '';
+  results.classList.remove('show');
+});
+
+
+	</script>
+	
+	</body>
+</html>
